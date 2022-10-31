@@ -7,15 +7,13 @@ pipeline{
     stages{     
             stage("Git Checkout"){
                  steps{
-                 ssh -i StrictHostKeyChecking=no ec2-user@54.91.2.69
-                 git credentialsId: 'github', url: 'https://github.com/YerraPrashanth/myweb.git'
+                 ssh ec2-user@54.91.2.69 git credentialsId: 'github', url: 'https://github.com/YerraPrashanth/myweb.git'
                  }
             }
             stage("Maven Build"){
                  steps{
-                 ssh -i StrictHostKeyChecking=no ec2-user@54.91.2.69
-                 sh "mvn clean package"
-                 sh "mv target/*.war target/myweb.war"
+                 ssh ec2-user@54.91.2.69 sh "mvn clean package"
+                 ssh ec2-user@54.91.2.69 sh "mv target/*.war target/myweb.war"
                 }
             }
             stage("deploy-dev"){
