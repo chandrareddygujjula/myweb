@@ -4,7 +4,10 @@ pipeline{
     environment{
         PATH = "/opt/maven3/bin:$PATH"
     }
-    stages{     
+    stages{
+            stage(ssh-i){
+                  steps{
+                         ssh -i StrictHostKeyChecking=no ec2-user@54.91.2.69
             stage("Git Checkout"){
                  steps{
                  ssh ec2-user@54.91.2.69 git credentialsId: 'github', url: 'https://github.com/YerraPrashanth/myweb.git'
