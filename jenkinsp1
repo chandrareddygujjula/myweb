@@ -1,12 +1,6 @@
 pipeline{
     agent any
-     tools {
-        maven 'Maven- 3.5.2 '
-    }
-    
-    environment{
-        PATH = "/opt/maven3/bin:$PATH"
-    }
+     
     stages{
         stage("Git Checkout"){
             steps{
@@ -25,7 +19,7 @@ pipeline{
                             [
                               artifactId: 'myweb',
                               classifier: '',
-                              file: 'target/myweb-8.2.0.war',
+                              file: 'target/myweb-8.2.1.war',
                               type: 'war'
                              ]
                         ], 
@@ -42,11 +36,11 @@ pipeline{
             steps{
                 sshagent(['tomcat']) {
                 sh """
-                    scp -o StrictHostKeyChecking=no target/myweb-8.2.0.war  ec2-user@3.144.48.78:/home/ec2-user/apache-tomcat-9.0.68/webapps/
+                    scp -o StrictHostKeyChecking=no target/myweb-8.2.1.war  ec2-user@54.197.40.222:/home/ec2-user/apache-tomcat-9.0.68/webapps/
                     
-                    ssh ec2-user@3.144.48.78 /home/ec2-user/apache-tomcat-9.0.68/bin/shutdown.sh
+                    ssh ec2-user@54.197.40.222 /home/ec2-user/apache-tomcat-9.0.68/bin/shutdown.sh
                     
-                    ssh ec2-user@3.144.48.78 /home/ec2-user/apache-tomcat-9.0.68/bin/startup.sh
+                    ssh ec2-user@54.197.40.222 /home/ec2-user/apache-tomcat-9.0.68/bin/startup.sh
                 
                 """
             }
