@@ -22,7 +22,7 @@ pipeline{
                 [
                 artifactId: 'myweb', 
                 classifier: '', 
-                file: 'target/*.war', 
+                file: 'target/myweb.8.2.1.war', 
                 type: 'war'
                 ]
                 ], 
