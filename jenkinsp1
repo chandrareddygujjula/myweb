@@ -18,32 +18,32 @@ pipeline{
         }
         stage('Upload War To Nexus'){
             steps{
-                 nexusArtifactUploader artifacts: [
-                 [
-                 artifactId: 'myweb', 
-                 classifier: '', 
-                 file: 'target/*war', 
-                 type: 'war'
-                 ]
-                 ], 
-                 credentialsId: 'nexus3', 
-                 groupId: 'in.javahome', 
-                 nexusUrl: 'http://44.202.58.245:8081/', 
-                 nexusVersion: 'nexus3', 
-                 protocol: 'http', 
-                 repository: 'sample-release', 
-                 version: '8.2.1' 
+                nexusArtifactUploader artifacts: [
+                [
+                artifactId: 'myweb', 
+                classifier: '', 
+                file: 'target/*.war', 
+                type: 'war'
+                ]
+                ], 
+                credentialsId: 'backup', 
+                groupId: 'in.javahome', 
+                nexusUrl: 'http://54.236.252.30:8081/', 
+                nexusVersion: 'nexus3', 
+                protocol: 'http', 
+                repository: 'sample-release', 
+                version: '8.2.1' 
               }
             }
         stage("deploy-dev"){
             steps{
-                sshagent(['tomcat']) {
+                sshagent(['deploy']) {
                 sh """
-                    scp -o StrictHostKeyChecking=no target/myweb-8.2.0.war  ec2-user@34.238.85.232:/home/ec2-user/apache-tomcat-9.0.68/webapps/
+                    scp -o StrictHostKeyChecking=no target/myweb-8.2.1.war  ec2-user@18.208.214.47:/home/ec2-user/apache-tomcat-9.0.68/webapps/
                     
-                    ssh ec2-user@34.238.85.232 /home/ec2-user/apache-tomcat-9.0.68/bin/shutdown.sh
+                    ssh ec2-user@18.208.214.47 /home/ec2-user/apache-tomcat-9.0.68/bin/shutdown.sh
                     
-                    ssh ec2-user@34.238.85.232 /home/ec2-user/apache-tomcat-9.0.68/bin/startup.sh
+                    ssh ec2-user@18.208.214.47 /home/ec2-user/apache-tomcat-9.0.68/bin/startup.sh
                 
                 """
             }
