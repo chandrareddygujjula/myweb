@@ -1,16 +1,10 @@
 pipeline{
     agent any
-     tools {
-        maven 'Maven-3.6.1'
-    }
-    
-    environment{
-        PATH = "/opt/maven3/bin:$PATH"
-    }
+     
     stages{
         stage("Git Checkout"){
             steps{
-                git credentialsId: 'javahome2', url: 'https://github.com/srinivas1987devops/myweb.git'
+                git credentialsId: 'javahome2', url: 'https://github.com/YerraPrashanth/myweb.git'
             }
         }
         stage("Maven Build"){
@@ -21,21 +15,22 @@ pipeline{
         }
         stage('Upload War To Nexus'){
             steps{
-                  nexusArtifactUploader artifacts: [
-                       [
-                            artifactId: 'myweb', 
-                            classifier: '', 
-                            file: "target/myweb-8.2.0.war", 
-                            type: 'war'
-                       ]
-                  ], 
-                  credentialsId: 'nexus3', 
-                  groupId: 'in.javahome', 
-                  nexusUrl: '172.31.46.170:8081', 
-                  nexusVersion: 'nexus3', 
-                  protocol: 'http', 
-                  repository: 'sample-releases', 
-                  version: '8.2.0'  
+                nexusArtifactUploader artifacts: 
+                [
+                [
+                artifactId: 'myweb', 
+                classifier: '', 
+                file: 'target/myweb-8.2.1.war', 
+                type: 'war'
+                ]
+                ], 
+                credentialsId: '', 
+                groupId: 'in.javahome', 
+                nexusUrl: 'http://44.203.103.188:8081/', 
+                nexusVersion: 'nexus3', 
+                protocol: 'http', 
+                repository: 'sample-release', 
+                version: '8.2.1'  
               }
             }
         stage("Execute Ansible"){
