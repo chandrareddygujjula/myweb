@@ -1,9 +1,18 @@
 pipeline{
     agent any
-stage("Git Checkout"){
-     git 'https://github.com/YerraPrashanth/myweb.git'
-}
-stage(build){
-           sh "mvn clean sonar:sonar package"
- }
-}
+ 
+    environment{
+        PATH = "/opt/maven3/bin:$PATH"
+    }
+    stages{
+        stage("Git Checkout"){
+            steps{
+                git credentialsId: 'github', url: 'https://github.com/YerraPrashanth/myweb.git'
+            }
+        }
+        stage("Maven Build"){
+            steps{
+                sh "mvn clean sonar:sonar package"
+                
+            }
+        }
