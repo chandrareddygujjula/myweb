@@ -6,3 +6,4 @@ stage("Git Checkout"){
 stage(build){
            sh "mvn clean sonar:sonar package"
  }
+}
