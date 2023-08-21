@@ -45,7 +45,7 @@
 		<url>http://repo1.maven.org/maven2</url>
 	    </pluginRepository>
 	</pluginRepositories>
-	  uild>
+	  <build>
         <plugins>
              <plugin>
                  <groupId>org.apache.maven.plugins</groupId>
